@@ -11,3 +11,13 @@ exports.getPosts = (req, res) => {
             }
         ]);
 };
+
+exports.createPost = (req, res) => {
+    const thumbnailTitle = req.body.ThumbnailTitle;
+    res.status(200).json([
+            {
+                _id: new Date().toISOString(),
+                thumbnailTitle: thumbnailTitle
+            }
+        ]);
+};
