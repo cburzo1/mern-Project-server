@@ -17,7 +17,11 @@ exports.createPost = (req, res) => {
     res.status(200).json([
             {
                 _id: new Date().toISOString(),
-                thumbnailTitle: thumbnailTitle
+                thumbnailTitle: thumbnailTitle,
+                creator: {
+                    userName: "Ed Summit"
+                },
+                timeEllapseSincePost: new Date()
             }
         ]);
 };
