@@ -1,3 +1,5 @@
+const { validationResult } = require('express-validator');
+
 exports.getPosts = (req, res) => {
     res.status(200).json([
             {
@@ -13,6 +15,16 @@ exports.getPosts = (req, res) => {
 };
 
 exports.createPost = (req, res) => {
+    const errors = validationResult(req);
+    if(!errors.isEmpty()){
+
+        console.log(errors);
+
+        return res.status(422).json({
+                message: 'Validation failed, entered data is incorrect.', 
+                errors: errors.array()
+            });
+    }
     const thumbnailTitle = req.body.ThumbnailTitle;
     res.status(200).json([
             {
