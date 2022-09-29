@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
 const userFeedRoutes = require('./routes/userFeed');
+const mongoose = require('mongoose');
 
 app.use(bodyParser.json());
 
@@ -14,4 +15,9 @@ app.use((req, res, next) => {
 
 app.use('/userFeed', userFeedRoutes);
 
-app.listen(3001);
+mongoose.connect(
+    'mongodb+srv://cboz:Luther66@cluster0.d0gwoea.mongodb.net/userPanel'
+).then(result => {
+    app.listen(3001);
+})
+.catch(err => console.log(err));
