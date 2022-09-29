@@ -16,7 +16,7 @@ app.use((req, res, next) => {
 app.use('/userFeed', userFeedRoutes);
 
 mongoose.connect(
-    'mongodb+srv://cboz:Luther66@cluster0.d0gwoea.mongodb.net/userPanel'
+    'mongodb+srv://-:-@cluster0.d0gwoea.mongodb.net/userPanel'
 ).then(result => {
     app.listen(3001);
 })
