@@ -6,7 +6,7 @@ const { body } = require('express-validator');
 router.get('/posts', userFeedController.getPosts);
 
 router.post('/post', [
-    body('ThumbnailTitle').trim().isLength({min: 7})
+    body('ThumbnailTitle').trim().isLength({min: 1})
 ], userFeedController.createPost);
 
 module.exports = router;

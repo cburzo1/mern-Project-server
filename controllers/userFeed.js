@@ -26,6 +26,7 @@ exports.createPost = (req, res) => {
     const thumbnailTitle = req.body.ThumbnailTitle;
     const post = new Post({
         thumbnailTitle: thumbnailTitle,
+        imageUrl: 'images/car1.png',
         creator: {
             userName: "Ed Summit"
         }
