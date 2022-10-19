@@ -5,13 +5,14 @@ const userFeedRoutes = require('./routes/userFeed');
 const mongoose = require('mongoose');
 const path = require('path');
 const multer = require('multer');
+const { v4: uuidv4 } = require('uuid');
 
 const fileStorage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, 'images');
+        cb(null, path.join(__dirname, 'images'));
     },
-    filename: () => {
-        cb(null, new Date().toISOString() + '-' + file.originalname);
+    filename: (req, file, cb) => {
+        cb(null, uuidv4() + '-' + file.originalname);
     }
 });
 
@@ -28,7 +29,9 @@ const fileFilter = (req, file, cb) => {
 }
 
 app.use(bodyParser.json());
-app.use(multer({storage: fileStorage, fileFilter: fileFilter}).single('image'));
+app.use(
+    multer({storage: fileStorage, fileFilter: fileFilter}).single('image')
+);
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
 app.use((req, res, next) => {
@@ -43,7 +46,7 @@ app.use('/userFeed', userFeedRoutes);
 app.use((error, req,res, next) =>{
     console.log(error);
     const status = error.statusCode;
-    const message = error.meesage;
+    const message = error.message;
     res.status(status).json({message: message});
 });
 

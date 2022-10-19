@@ -1,9 +1,10 @@
 const { validationResult } = require('express-validator');
 const Post = require("../models/post");
 
-exports.getPosts = (req, res) => {
+exports.getPosts = (req, res, next) => {
     Post.find()
     .then(posts => {
+        console.log(posts);
         res.status(200).json({message: "Fetched posts successfully.", posts: posts});
     })
     .catch(err => {
@@ -14,7 +15,7 @@ exports.getPosts = (req, res) => {
     });
 };
 
-exports.createPost = (req, res) => {
+exports.createPost = (req, res, next) => {
     const errors = validationResult(req);
     if(!errors.isEmpty()){
         const error = new Error('Validation failed, entered data is incorrect.');
@@ -27,7 +28,7 @@ exports.createPost = (req, res) => {
         throw error;
     }
 
-    const imageUrl = req.file.path;
+    const imageUrl = req.file.path.replaceAll("\\" ,"/");
     const thumbnailTitle = req.body.ThumbnailTitle;
     const post = new Post({
         thumbnailTitle: thumbnailTitle,
