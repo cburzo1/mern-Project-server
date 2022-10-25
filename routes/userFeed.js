@@ -9,4 +9,8 @@ router.post('/post', [
     body('ThumbnailTitle').trim().isLength({min: 1})
 ], userFeedController.createPost);
 
+router.put('/post/:postId',[
+    body('ThumbnailTitle').trim().isLength({min: 1})
+], userFeedController.updatePost);
+
 module.exports = router;
