@@ -63,6 +63,7 @@ exports.createPost = (req, res, next) => {
 };
 
 exports.updatePost = (req, res, next) => {
+    console.log("HEEERRREEE");
     const postId = req.params.postId;
     const errors = validationResult(req);
     if(!errors.isEmpty()){
@@ -71,7 +72,7 @@ exports.updatePost = (req, res, next) => {
         throw error;
     }
     const thumbnailTitle = req.body.ThumbnailTitle;
-    const imageUrl = req.file.path.replaceAll("\\" ,"/");
+    let imageUrl = req.file.path.replaceAll("\\" ,"/");
     if(req.file){
         imageUrl = req.file.path.replaceAll("\\" ,"/");;
     }
@@ -110,6 +111,34 @@ exports.updatePost = (req, res, next) => {
 
         next(err);
     })
+}
+
+exports.deletePost = (req, res, next) => {
+    const postId = req.params.postId;
+    Post
+    .findById(postId)
+    .then(post => {
+        if(!post){
+            const error = new Error('Could not find post');
+            error.statusCode = 404;
+            throw error;
+        }
+        //Check loggedIn User
+        clearImage(post.imageUrl);
+
+        return Post.findByIdAndRemove(postId);
+    })
+    .then(result => {
+        console.log(result);
+        res.status(200).json({message: 'Deleted post.'});
+    })
+    .catch(err => {
+        if(!err.statusCode){
+            err.statusCode = 500;
+        }
+
+        next(err);
+    });
 }
 
 const clearImage = filePath => {
