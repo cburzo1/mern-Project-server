@@ -2,6 +2,7 @@ const { validationResult } = require('express-validator');
 const Post = require("../models/post");
 const fs = require('fs');
 const path = require('path');
+const User = require('../models/user');
 
 exports.getPosts = (req, res, next) => {
     Post.find()
@@ -16,6 +17,22 @@ exports.getPosts = (req, res, next) => {
         next(err);
     });
 };
+
+exports.getUtilityPosts = (req, res, next) => {
+    console.log("OUTSIDE:: ", req.userId);
+    User.findById(req.userId)
+    .populate('posts')
+    .then(result =>{
+        console.log("INSIDE:: ",result.posts);
+        res.status(200).json({message: "Fetched posts successfully.", posts: result.posts});
+    })
+    .catch(err => {
+        if(!err.statusCode){
+            err.statusCode = 500;
+        }
+        next(err);
+    });
+}
 
 exports.createPost = (req, res, next) => {
     const errors = validationResult(req);
@@ -32,23 +49,29 @@ exports.createPost = (req, res, next) => {
 
     const imageUrl = req.file.path.replaceAll("\\" ,"/");
     const thumbnailTitle = req.body.ThumbnailTitle;
+    let creator;
     const post = new Post({
         thumbnailTitle: thumbnailTitle,
         imageUrl: imageUrl,
-        creator: {
-            userName: "Ed Summit"
-        }
+        creator: req.userId
     });
 
     post
     .save()
     .then(result => {
-        console.log(result);
-
-        res.status(200).json([
+        return User.findById(req.userId);
+    })
+    .then(user =>{
+        creator = user;
+        user.posts.push(post);
+        return user.save();
+    })
+    .then(result => {
+        res.status(201).json([
             {
                 message: 'Post created successfully!',
-                post: result
+                post: post,
+                creator: {_id: creator._id, name: creator.name}
             }
         ]);
     })
@@ -63,7 +86,6 @@ exports.createPost = (req, res, next) => {
 };
 
 exports.updatePost = (req, res, next) => {
-    console.log("HEEERRREEE");
     const postId = req.params.postId;
     const errors = validationResult(req);
     if(!errors.isEmpty()){
