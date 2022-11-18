@@ -5,6 +5,12 @@ const fs = require('fs');
 const path = require('path');
 const bcrypt = require('bcryptjs');
 const JWT = require('jsonwebtoken');
+const { now } = require('mongoose');
+
+var today = new Date();
+var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+var dateTime = date+' '+time;
 
 exports.signup = (req, res, next) =>{
     const errors = validationResult(req);
@@ -66,9 +72,13 @@ exports.login = (req, res, next) => {
             userId: loadedUser._id.toString()
         }, 
         'secret', 
-        {expiresIn: '1h'}
-        );
-        res.status(200).json({token: token, userId: loadedUser._id.toString()})
+        {
+            expiresIn: '10s'
+        });
+        res.status(200).json({
+            token: token, 
+            userId: loadedUser._id.toString()
+        })
     })
     .catch(err => {
         if(!err.statusCode){

@@ -151,8 +151,13 @@ exports.deletePost = (req, res, next) => {
         return Post.findByIdAndRemove(postId);
     })
     .then(result => {
-        console.log(result);
-        res.status(200).json({message: 'Deleted post.'});
+        User.findById(req.userId)
+        .populate('posts')
+        .then(result =>{
+            console.log("INSIDE::DELETE ", result.posts);
+            res.status(200).json({message: "Fetched posts successfully.", posts: result.posts});
+        })
+        //res.status(200).json({message: 'Deleted post.'});
     })
     .catch(err => {
         if(!err.statusCode){
