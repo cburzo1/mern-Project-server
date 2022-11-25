@@ -7,11 +7,6 @@ const bcrypt = require('bcryptjs');
 const JWT = require('jsonwebtoken');
 const { now } = require('mongoose');
 
-var today = new Date();
-var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-var dateTime = date+' '+time;
-
 exports.signup = (req, res, next) =>{
     const errors = validationResult(req);
     if(!errors.isEmpty()){
@@ -67,17 +62,20 @@ exports.login = (req, res, next) => {
             error.statusCode = 401;
             throw error;
         }
+
         const token = JWT.sign({
             email: loadedUser.email,
             userId: loadedUser._id.toString()
         }, 
         'secret', 
         {
-            expiresIn: '10s'
+            expiresIn: '10m'
         });
+
         res.status(200).json({
             token: token, 
-            userId: loadedUser._id.toString()
+            userId: loadedUser._id.toString(),
+            expiresIn: 600
         })
     })
     .catch(err => {
