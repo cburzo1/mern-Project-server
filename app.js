@@ -54,7 +54,7 @@ app.use((error, req,res, next) =>{
 });
 
 mongoose.connect(
-    'mongodb+srv://cboz:Luther66@cluster0.d0gwoea.mongodb.net/userPanel'
+    /*ADD MONGO URI HERE INSIDE THE SINGLE QUOTES*/''
 ).then(result => {
     app.listen(3001);
 })

@@ -3,6 +3,7 @@ const Post = require("../models/post");
 const fs = require('fs');
 const path = require('path');
 const User = require('../models/user');
+const user = require('../models/user');
 
 exports.getPosts = (req, res, next) => {
     Post.find()
@@ -155,6 +156,10 @@ exports.deletePost = (req, res, next) => {
         .populate('posts')
         .then(result =>{
             console.log("INSIDE::DELETE ", result.posts);
+            
+            console.log(postId);
+            result.posts.pull(postId);
+            result.save();
             res.status(200).json({message: "Fetched posts successfully.", posts: result.posts});
         })
         //res.status(200).json({message: 'Deleted post.'});
