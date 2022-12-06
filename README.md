@@ -1,13 +1,13 @@
 # mern-Project-server
 
-THis is my first complete backend REST API. IT features all the important security features such as: Authentication, encryption, Authorization, and token exchanges.
-it also utilizes a Database(mongo db) complete with an ORM(mongoose). MVC structure: Models, controllers, and routes for the view which is a REACT app. and Full CRUD
+This is my first complete backend REST API. It features all the important security features such as: Authentication, encryption, Authorization, and token exchanges.
+It also utilizes a Database(mongo db) complete with an ORM(mongoose). MVC structure: Models, controllers, and routes for the view which is a REACT app. and Full CRUD
 functionality.
 
 The code is easy to maintain and is very scalable. I might plan to use this code for other REST APIs and a similar methodology for GraphQL as well as potential 
-microservice architures. But that is for other projects.
+microservice architectures. But that is for other projects.
 
-Being that all I want to showcase is the basics of REST APIs, I kept the react appp very minimal. Please see project_oog_2, or got to ooglandish.web.app to see my
+Being that, all I want to showcase is the basics of REST APIs, I kept the react app very minimal. Please see project_oog_2, or go to ooglandish.web.app to see my
 fully featured react app.
 
 run this project: 
