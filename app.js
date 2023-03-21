@@ -7,6 +7,13 @@ const mongoose = require('mongoose');
 const path = require('path');
 const multer = require('multer');
 const { v4: uuidv4 } = require('uuid');
+const port = process.env.PORT || 3000
+
+app.use(express.static(path.join(__dirname, 'build')));
+
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
+})
 
 const fileStorage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -53,9 +60,19 @@ app.use((error, req,res, next) =>{
     res.status(status).json({message: message, data: data});
 });
 
+//serve static assets if in production
+/*if(process.env.NODE_ENV === 'production'){
+    //set static folder
+    app.use(express.static('C:/Users/cb/Desktop/Life_Tracker/Code/Projects/mernProjectFullStack/mern-project-client/mern-Project/build'));
+    app.get('*', (req, res) =>{
+        res.sendFile(path.resolve(__dirname, "mern-Project", "build", 'index.html'));
+    });
+}*/
+
 mongoose.connect(
-    /*ADD MONGO URI HERE INSIDE THE SINGLE QUOTES*/''
+    /*ADD MONGO URI HERE INSIDE THE SINGLE QUOTES*/
+    'mongodb+srv://cboz:luther66@cluster0.d0gwoea.mongodb.net/userPanel'
 ).then(result => {
-    app.listen(3001);
+    app.listen(port);
 })
 .catch(err => console.log(err));
