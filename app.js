@@ -9,6 +9,8 @@ const multer = require('multer');
 const { v4: uuidv4 } = require('uuid');
 const port = process.env.PORT || 3000
 
+console.log('PROCESS', process.env);
+
 app.use(express.static(path.join(__dirname, 'build')));
 
 app.get('/', (req, res) => {
