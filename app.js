@@ -73,8 +73,7 @@ app.use((error, req,res, next) =>{
 }*/
 
 mongoose.connect(
-    /*ADD MONGO URI HERE INSIDE THE SINGLE QUOTES*/
-    process.env.mongoURI
+    'mongodb+srv://cboz:luther66@cluster0.d0gwoea.mongodb.net/userPanel'
 ).then(result => {
     app.listen(port);
 })
