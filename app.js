@@ -7,9 +7,10 @@ const mongoose = require('mongoose');
 const path = require('path');
 const multer = require('multer');
 const { v4: uuidv4 } = require('uuid');
+require("dotenv").config();
 const port = process.env.PORT || 3000
 
-console.log('PROCESS', process.env);
+//console.log('PROCESS', process.env);
 
 app.use(express.static(path.join(__dirname, 'build')));
 
@@ -73,7 +74,7 @@ app.use((error, req,res, next) =>{
 
 mongoose.connect(
     /*ADD MONGO URI HERE INSIDE THE SINGLE QUOTES*/
-    'mongodb+srv://cboz:luther66@cluster0.d0gwoea.mongodb.net/userPanel'
+    process.env.mongoURI
 ).then(result => {
     app.listen(port);
 })
