@@ -10,7 +10,7 @@ const { v4: uuidv4 } = require('uuid');
 require("dotenv").config();
 const port = process.env.PORT || 3000
 
-//console.log('PROCESS', process.env);
+console.log('PROCESS', process.env.mongoURI);
 
 app.use(express.static(path.join(__dirname, 'build')));
 
