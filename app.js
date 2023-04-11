@@ -71,9 +71,9 @@ app.use((error, req,res, next) =>{
         res.sendFile(path.resolve(__dirname, "mern-Project", "build", 'index.html'));
     });
 }*/
-
+let thing = 'mongodb+srv://cboz:luther66@cluster0.d0gwoea.mongodb.net/userPanel'
 mongoose.connect(
-    'mongodb+srv://cboz:luther66@cluster0.d0gwoea.mongodb.net/userPanel'
+    thing
 ).then(result => {
     app.listen(port);
 })
