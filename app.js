@@ -72,8 +72,9 @@ app.use((error, req,res, next) =>{
     });
 }*/
 let thing = 'mongodb+srv://cboz:luther66@cluster0.d0gwoea.mongodb.net/userPanel'
+console.log(thing);
 mongoose.connect(
-    thing
+    process.env.mongoURI
 ).then(result => {
     app.listen(port);
 })
