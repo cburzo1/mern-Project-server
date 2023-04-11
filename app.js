@@ -10,8 +10,6 @@ const { v4: uuidv4 } = require('uuid');
 require("dotenv").config();
 const port = process.env.PORT || 3000
 
-console.log('PROCESS', process.env.mongoURI);
-
 app.use(express.static(path.join(__dirname, 'build')));
 
 app.get('/', (req, res) => {
@@ -63,16 +61,8 @@ app.use((error, req,res, next) =>{
     res.status(status).json({message: message, data: data});
 });
 
-//serve static assets if in production
-/*if(process.env.NODE_ENV === 'production'){
-    //set static folder
-    app.use(express.static('C:/Users/cb/Desktop/Life_Tracker/Code/Projects/mernProjectFullStack/mern-project-client/mern-Project/build'));
-    app.get('*', (req, res) =>{
-        res.sendFile(path.resolve(__dirname, "mern-Project", "build", 'index.html'));
-    });
-}*/
 mongoose.connect(
-    process.env.DBURI2
+    process.env.DBURI2 || process.env.mongoURI
 ).then(result => {
     app.listen(port);
 })
