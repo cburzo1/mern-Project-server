@@ -8,7 +8,7 @@ const path = require('path');
 const multer = require('multer');
 const { v4: uuidv4 } = require('uuid');
 require("dotenv").config();
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 3001
 
 app.use(express.static(path.join(__dirname, 'build')));
 
